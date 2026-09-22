@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMigrate - Environmental Impact & Migration Causes</title>
+    <!-- Tailwind CSS CDN with dark mode support -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        eco: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            dark: '#062c19'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #16a34a;
+            border-radius: 4px;
+        }
+
+        /* Light glass */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        /* Dark glass */
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+        }
+
+        /* Drag & Drop interactive feedback */
+        .draggable-card {
+            cursor: grab;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .draggable-card:active {
+            cursor: grabbing;
+        }
+        .draggable-card.dragging {
+            opacity: 0.4;
+            transform: scale(0.96);
+        }
+
+        .drop-zone {
+            transition: all 0.25s ease;
+        }
+        .drop-zone.drag-over {
+            background-color: rgba(34, 197, 94, 0.15);
+            border-color: #16a34a;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-eco-500 selection:text-white min-h-screen flex flex-col transition-colors duration-300">
+
+    <nav class="sticky top-0 z-50 glass-card transition-colors duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-eco-600 to-teal-400 flex items-center justify-center text-white text-xl font-bold shadow-md shadow-eco-500/20">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <span class="text-xl font-extrabold bg-gradient-to-r from-eco-800 via-eco-600 to-teal-600 dark:from-eco-400 dark:to-teal-300 bg-clip-text text-transparent tracking-tight">
+                        EcoMigrate
+                    </span>
+                </div>
+                
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-600 dark:text-slate-300">
+                    <a href="#about" class="hover:text-eco-600 dark:hover:text-eco-400 transition-colors">Environment & Pollution</a>
+                    <a href="#activity" class="hover:text-eco-600 dark:hover:text-eco-400 transition-colors">Migration Activity</a>
+                    <a href="#quiz" class="hover:text-eco-600 dark:hover:text-eco-400 transition-colors">5-Question Quiz</a>
+                </div>
+
+                <!-- Action Controls: Theme Switcher & Start Button -->
+                <div class="flex items-center gap-3">
+                    <!-- Light / Dark Mode Toggle Button -->
+                    <button id="theme-toggle" onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-amber-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all border border-slate-300/50 dark:border-slate-700" title="Toggle Light / Dark Mode">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-base"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-base hidden"></i>
+                    </button>
+
+                    <a href="#activity" class="bg-eco-600 hover:bg-eco-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-md shadow-eco-600/30 transition-all hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-1.5">
+                        Start Activity <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative overflow-hidden bg-gradient-to-b from-eco-50/80 via-teal-50/20 to-slate-50 dark:from-slate-900 dark:via-slate-900/60 dark:to-slate-950 pt-12 pb-16 lg:pt-20 lg:pb-24 border-b border-slate-200/60 dark:border-slate-800 transition-colors duration-300">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-eco-200/50 dark:bg-eco-900/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-24 w-96 h-96 bg-teal-200/40 dark:bg-teal-900/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-eco-100 dark:bg-eco-900/50 text-eco-800 dark:text-eco-300 border border-eco-200 dark:border-eco-700 shadow-sm">
+                        <i class="fa-solid fa-earth-americas text-eco-600 dark:text-eco-400"></i> Interactive Learning Portal
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
+                        Environmental Impact & <span class="bg-gradient-to-r from-eco-600 to-teal-600 dark:from-eco-400 dark:to-teal-400 bg-clip-text text-transparent">Human Migration</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Severe environmental degradation, pollution, and climate events drive millions from their homes each year. Explore how environmental hazards interact with Economic, Political, Social, Educational, and Safety drivers.
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+                        <a href="#activity" class="bg-eco-600 hover:bg-eco-700 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-eco-600/25 transition-all hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad"></i> Classify Scenarios
+                        </a>
+                        <a href="#quiz" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-6 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-question text-eco-600 dark:text-eco-400"></i> Take Reflection Quiz
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/80 dark:border-slate-800 relative">
+                        <div class="absolute -top-3 -right-3 bg-eco-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            Global Displacement
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-eco-600 dark:text-eco-400"></i> Environmental Drivers
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/60 dark:border-slate-800 shadow-sm">
+                                <div class="text-3xl font-extrabold text-eco-600 dark:text-eco-400 mb-1">32.6 Million</div>
+                                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Internal Displacements</div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">Triggered by weather-related disasters and environmental collapse annually.</p>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-900/70 border border-slate-200/60 dark:border-slate-800 shadow-sm">
+                                <div class="text-3xl font-extrabold text-teal-600 dark:text-teal-400 mb-1">6 Core Drivers</div>
+                                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Classification Framework</div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">Economic, Political, Social/Family, Educational, Environmental, Safety.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="py-16 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-extrabold tracking-wider text-eco-600 dark:text-eco-400 uppercase bg-eco-100 dark:bg-eco-950 px-3 py-1 rounded-full border border-eco-200 dark:border-eco-800">Environmental Crisis</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Pollution & Environmental Displacement</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-3">When pollution renders rivers toxic, soils sterile, and air hazardous, communities face severe health issues and economic collapse, leaving migration as their only option.</p>
+            </div>
+
+            <!-- Tabbed Interface for Types of Pollution -->
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-6" id="pollution-tabs">
+                    <button onclick="switchTab('air')" id="tab-air" class="tab-btn active px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all bg-eco-600 text-white shadow-md">
+                        <i class="fa-solid fa-wind"></i> Air Pollution
+                    </button>
+                    <button onclick="switchTab('water')" id="tab-water" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-droplet text-blue-500"></i> Water Toxins
+                    </button>
+                    <button onclick="switchTab('soil')" id="tab-soil" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-mountain text-amber-600"></i> Soil Degradation
+                    </button>
+                    <button onclick="switchTab('climate')" id="tab-climate" class="tab-btn px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                        <i class="fa-solid fa-temperature-arrow-up text-red-500"></i> Extreme Climate
+                    </button>
+                </div>
+
+                <div id="tab-content-container">
+                    <!-- Air Pollution -->
+                    <div id="panel-air" class="tab-panel grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-eco-600 dark:text-eco-400 uppercase tracking-widest">Atmospheric Health Crisis</span>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1 mb-3">Toxic Air & Forced Relocation</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                                Uncontrolled industrial emissions, heavy smog, and increasing forest fires dramatically degrade air quality, forcing families with chronic respiratory illnesses to move away from contaminated urban regions.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-eco-500"></i> Hazardous PM2.5 levels destroying city livability.</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-eco-500"></i> Chemical leaks displacing surrounding residential districts.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-eco-100/60 dark:bg-eco-950/50 rounded-2xl p-6 border border-eco-200/50 dark:border-eco-800 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-eco-600 text-white flex items-center justify-center text-2xl mb-4 shadow-lg">
+                                <i class="fa-solid fa-smog"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-lg">Health Hazard Impact</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">
+                                Respiratory diseases triggered by chronic smog lead thousands of households to migrate to cleaner, rural, or high-altitude regions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Water Toxins -->
+                    <div id="panel-water" class="tab-panel hidden grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">Water Contamination</span>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1 mb-3">Poisoned Water Supplies</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                                Industrial waste dumping, agricultural runoff, and microplastics render drinking water toxic and destroy local fishing ecosystems, creating environmental displaced communities.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-500"></i> Toxic runoff killing river marine life and fisheries.</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-500"></i> Underground water table contamination near factories.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 dark:bg-slate-900 rounded-2xl p-6 border border-blue-200 dark:border-blue-900 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-2xl mb-4 shadow-lg">
+                                <i class="fa-solid fa-faucet-drip"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-lg">Hydrological Crisis</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">
+                                Without safe drinking water or fishing resources, entire rural settlements are forced to dismantle and move to urban areas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Soil Degradation -->
+                    <div id="panel-soil" class="tab-panel hidden grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">Agricultural Insecurity</span>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1 mb-3">Land Poisoning & Desertification</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                                Heavy synthetic chemical usage, deforestation, and soil erosion strip agricultural land of nutrients, forcing farming families to abandon unproductive fields.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Loss of fertile soil causing agricultural failure.</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Desert expansion forcing pastoral communities away.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 dark:bg-slate-900 rounded-2xl p-6 border border-amber-200 dark:border-amber-900 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-amber-700 text-white flex items-center justify-center text-2xl mb-4 shadow-lg">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-lg">Soil Degradation</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">
+                                Over 24 billion tons of fertile topsoil are eroded every year, wiping out agricultural jobs across developing regions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Extreme Climate -->
+                    <div id="panel-climate" class="tab-panel hidden grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-widest">Disaster Displacement</span>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mt-1 mb-3">Sea-Level Rise & Weather Emergencies</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                                Ocean warming fuels record-breaking storms, coastal erosion, and rising seas that submerge island nations and destroy coastal infrastructure.
+                            </p>
+                            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-red-500"></i> Coastal inundation flooding low-lying settlements.</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-red-500"></i> Extreme droughts causing catastrophic water deficits.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 dark:bg-slate-900 rounded-2xl p-6 border border-red-200 dark:border-red-900 flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-red-600 text-white flex items-center justify-center text-2xl mb-4 shadow-lg">
+                                <i class="fa-solid fa-house-flood-water"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100 text-lg">Climate Vulnerability</h4>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">
+                                Estimates warn that up to 200 million climate refugees could be displaced by 2050 due to sea-level rise and environmental destruction.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="activity" class="py-16 bg-slate-100/70 dark:bg-slate-950/80 border-b border-slate-200/60 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs font-extrabold tracking-wider text-eco-600 dark:text-eco-400 uppercase bg-eco-100 dark:bg-eco-950 px-3 py-1 rounded-full border border-eco-200 dark:border-eco-800">Student Activity</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-3">Migrant Cause Classification</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-2">Read each migrant scenario. Drag and drop or click to assign each situation to its correct driver category: <b>Economic, Political, Social/Family, Educational, Environmental, or Safety-related.</b></p>
+            </div>
+
+            <!-- Activity Dashboard Header -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 mb-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-6">
+                    <div>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Score</span>
+                        <div class="text-2xl font-extrabold text-eco-600 dark:text-eco-400" id="current-score">0 / 6</div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+                    <div>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider">Remaining</span>
+                        <div class="text-2xl font-extrabold text-slate-700 dark:text-slate-200" id="cards-remaining">6</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex-1 max-w-md mx-4">
+                    <div class="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">
+                        <span>Activity Completion</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
+                        <div id="progress-bar" class="bg-eco-600 h-3 rounded-full transition-all duration-300 w-0"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="resetActivity()" class="px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold rounded-xl transition shadow-sm">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reset
+                    </button>
+                    <button onclick="toggleHint()" class="px-4 py-2 bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-sm font-semibold rounded-xl transition">
+                        <i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Hint
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hint Box -->
+            <div id="hint-box" class="hidden mb-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-sm flex items-start gap-3">
+                <i class="fa-solid fa-lightbulb text-amber-600 dark:text-amber-400 text-lg mt-0.5"></i>
+                <div>
+                    <span class="font-bold">Classification Hint:</span> Look for key root triggers! Terms like <i>"toxic waste", "water contamination", "polluted rivers"</i> point to <b>Environmental</b> causes, whereas <i>"job loss", "income", "poverty"</i> signify <b>Economic</b> drivers.
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Deck Column -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm sticky top-24">
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 mb-4 flex items-center justify-between">
+                            <span><i class="fa-solid fa-id-card text-eco-600 dark:text-eco-400 mr-2"></i> Migrant Scenarios</span>
+                            <span class="text-xs font-normal text-slate-500 dark:text-slate-400">(Drag or Tap card)</span>
+                        </h3>
+
+                        <div id="card-deck" class="space-y-4 min-h-[300px] flex flex-col justify-center">
+                            <!-- Injected dynamically via JavaScript -->
+                        </div>
+
+                        <!-- Touch Helper Buttons -->
+                        <div id="quick-assign-panel" class="hidden mt-6 pt-4 border-t border-slate-200 dark:border-slate-800">
+                            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase block mb-2">Assign Selected Card To:</span>
+                            <div class="grid grid-cols-2 gap-2" id="quick-category-buttons">
+                                <!-- Mobile direct selection buttons -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drop Category Zones Column -->
+                <div class="lg:col-span-7">
+                    <div class="grid sm:grid-cols-2 gap-4" id="categories-grid">
+                        <!-- Category 1: Economic -->
+                        <div class="drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-4 bg-white/60 dark:bg-slate-900/60 min-h-[160px] flex flex-col" data-category="Economic">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm">
+                                    <span class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-sack-dollar"></i></span>
+                                    Economic
+                                </span>
+                                <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full count-badge">0</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Jobs, unemployment, financial survival, wages.</p>
+                            <div class="category-slot flex-1 space-y-2"></div>
+                        </div>
+
+                        <!-- Category 2: Political -->
+                        <div class="drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-4 bg-white/60 dark:bg-slate-900/60 min-h-[160px] flex flex-col" data-category="Political">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm">
+                                    <span class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-landmark"></i></span>
+                                    Political
+                                </span>
+                                <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full count-badge">0</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Government instability, election rights, state laws.</p>
+                            <div class="category-slot flex-1 space-y-2"></div>
+                        </div>
+
+                        <!-- Category 3: Social or family-related -->
+                        <div class="drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-4 bg-white/60 dark:bg-slate-900/60 min-h-[160px] flex flex-col" data-category="Social or family-related">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm">
+                                    <span class="w-8 h-8 rounded-lg bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-people-roof"></i></span>
+                                    Social or Family
+                                </span>
+                                <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full count-badge">0</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Family reunification, marriage, community ties.</p>
+                            <div class="category-slot flex-1 space-y-2"></div>
+                        </div>
+
+                        <!-- Category 4: Educational -->
+                        <div class="drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-4 bg-white/60 dark:bg-slate-900/60 min-h-[160px] flex flex-col" data-category="Educational">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm">
+                                    <span class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-graduation-cap"></i></span>
+                                    Educational
+                                </span>
+                                <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full count-badge">0</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">University degrees, specialized research, schooling.</p>
+                            <div class="category-slot flex-1 space-y-2"></div>
+                        </div>
+
+                        <!-- Category 5: Environmental -->
+                        <div class="drop-zone border-2 border-dashed border-eco-500 dark:border-eco-600 bg-eco-50/50 dark:bg-eco-950/40 rounded-2xl p-4 min-h-[160px] flex flex-col" data-category="Environmental">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-eco-900 dark:text-eco-300 flex items-center gap-2 text-sm">
+                                    <span class="w-8 h-8 rounded-lg bg-eco-200 dark:bg-eco-900 text-eco-800 dark:text-eco-200 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-tree"></i></span>
+                                    Environmental
+                                </span>
+                                <span class="text-xs bg-eco-100 dark:bg-eco-900 text-eco-800 dark:text-eco-300 font-bold px-2 py-0.5 rounded-full count-badge">0</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Pollution, chemical spills, droughts, flooding.</p>
+                            <div class="category-slot flex-1 space-y-2"></div>
+                        </div>
+
+                        <!-- Category 6: Safety-related -->
+                        <div class="drop-zone border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-4 bg-white/60 dark:bg-slate-900/60 min-h-[160px] flex flex-col" data-category="Safety-related">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2 text-sm">
+                                    <span class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 flex items-center justify-center text-sm font-bold"><i class="fa-solid fa-shield-halved"></i></span>
+                                    Safety-related
+                                </span>
+                                <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-0.5 rounded-full count-badge">0</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">War, violence, crime, direct physical danger.</p>
+                            <div class="category-slot flex-1 space-y-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quiz" class="py-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <span class="text-xs font-extrabold tracking-wider text-eco-600 dark:text-eco-400 uppercase bg-eco-100 dark:bg-eco-950 px-3 py-1 rounded-full border border-eco-200 dark:border-eco-800">Knowledge Assessment</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-3">5-Question Reflection Quiz</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-2">Test your understanding of environmental causes and human displacement.</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-lg space-y-8" id="quiz-container">
+                
+                <!-- Question 1 -->
+                <div class="space-y-3" id="q1-block">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-base sm:text-lg">1. Which situation represents a direct <span class="text-eco-600 dark:text-eco-400">Environmental</span> cause of human migration?</h3>
+                    <div class="grid sm:grid-cols-2 gap-3" id="q1-options">
+                        <button onclick="checkQuizAnswer(1, 'a', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            A) Relocating to attend a master's degree program at an overseas university.
+                        </button>
+                        <button onclick="checkQuizAnswer(1, 'b', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            B) Leaving a village because industrial chemical spills poisoned local farm water.
+                        </button>
+                        <button onclick="checkQuizAnswer(1, 'c', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            C) Moving to another city due to election-related political instability.
+                        </button>
+                        <button onclick="checkQuizAnswer(1, 'd', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            D) Moving across town to live closer to elderly grandparents.
+                        </button>
+                    </div>
+                    <div id="q1-feedback" class="hidden text-xs font-bold p-3 rounded-lg"></div>
+                </div>
+
+                <hr class="border-slate-200 dark:border-slate-800">
+
+                <!-- Question 2 -->
+                <div class="space-y-3" id="q2-block">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-base sm:text-lg">2. What term is commonly used for individuals forced to relocate due to environmental collapse or natural disasters?</h3>
+                    <div class="grid sm:grid-cols-2 gap-3" id="q2-options">
+                        <button onclick="checkQuizAnswer(2, 'a', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            A) Economic Expatriates
+                        </button>
+                        <button onclick="checkQuizAnswer(2, 'b', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            B) Environmental or Climate Displaced / Refugees
+                        </button>
+                        <button onclick="checkQuizAnswer(2, 'c', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            C) Academic Exchange Students
+                        </button>
+                        <button onclick="checkQuizAnswer(2, 'd', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            D) Seasonal Tourists
+                        </button>
+                    </div>
+                    <div id="q2-feedback" class="hidden text-xs font-bold p-3 rounded-lg"></div>
+                </div>
+
+                <hr class="border-slate-200 dark:border-slate-800">
+
+                <!-- Question 3 -->
+                <div class="space-y-3" id="q3-block">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-base sm:text-lg">3. A family moves to another country primarily to reunite with parents who moved earlier. What driver is this?</h3>
+                    <div class="grid sm:grid-cols-2 gap-3" id="q3-options">
+                        <button onclick="checkQuizAnswer(3, 'a', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            A) Safety-related
+                        </button>
+                        <button onclick="checkQuizAnswer(3, 'b', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            B) Environmental
+                        </button>
+                        <button onclick="checkQuizAnswer(3, 'c', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            C) Social or family-related
+                        </button>
+                        <button onclick="checkQuizAnswer(3, 'd', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            D) Political
+                        </button>
+                    </div>
+                    <div id="q3-feedback" class="hidden text-xs font-bold p-3 rounded-lg"></div>
+                </div>
+
+                <hr class="border-slate-200 dark:border-slate-800">
+
+                <!-- Question 4 -->
+                <div class="space-y-3" id="q4-block">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-base sm:text-lg">4. How can soil degradation directly lead to <span class="text-emerald-600 dark:text-emerald-400">Economic</span> migration?</h3>
+                    <div class="grid sm:grid-cols-2 gap-3" id="q4-options">
+                        <button onclick="checkQuizAnswer(4, 'a', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            A) It ruins crop harvests, eliminating agricultural incomes and forcing farmers to find urban jobs.
+                        </button>
+                        <button onclick="checkQuizAnswer(4, 'b', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            B) It grants farmers free academic scholarships in foreign countries.
+                        </button>
+                        <button onclick="checkQuizAnswer(4, 'c', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            C) It automatically resolves political civil conflicts in rural regions.
+                        </button>
+                        <button onclick="checkQuizAnswer(4, 'd', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            D) It forces citizens to vote in municipal elections.
+                        </button>
+                    </div>
+                    <div id="q4-feedback" class="hidden text-xs font-bold p-3 rounded-lg"></div>
+                </div>
+
+                <hr class="border-slate-200 dark:border-slate-800">
+
+                <!-- Question 5 -->
+                <div class="space-y-3" id="q5-block">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 text-base sm:text-lg">5. Fleeing across a national border to escape active armed combat is primarily classified as:</h3>
+                    <div class="grid sm:grid-cols-2 gap-3" id="q5-options">
+                        <button onclick="checkQuizAnswer(5, 'a', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            A) Educational Cause
+                        </button>
+                        <button onclick="checkQuizAnswer(5, 'b', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            B) Safety-related Cause
+                        </button>
+                        <button onclick="checkQuizAnswer(5, 'c', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            C) Social/Family Cause
+                        </button>
+                        <button onclick="checkQuizAnswer(5, 'd', this)" class="q-btn text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition">
+                            D) Environmental Cause
+                        </button>
+                    </div>
+                    <div id="q5-feedback" class="hidden text-xs font-bold p-3 rounded-lg"></div>
+                </div>
+
+                <!-- Quiz Completion Score Summary Banner -->
+                <div id="quiz-score-banner" class="hidden p-6 rounded-2xl bg-eco-50 dark:bg-eco-950/60 border border-eco-200 dark:border-eco-800 text-center space-y-2">
+                    <div class="text-eco-600 dark:text-eco-400 font-extrabold text-2xl" id="quiz-final-score-text">Score: 5 / 5</div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300">You have completed all 5 reflection questions!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Summary Modal -->
+    <div id="result-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 text-center transform transition-all">
+            <div class="w-20 h-20 bg-eco-100 dark:bg-eco-950 text-eco-600 dark:text-eco-400 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 animate-bounce">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-1">Excellent Classification!</h3>
+            <p class="text-slate-600 dark:text-slate-300 text-sm mb-6">You have categorized all 6 migrant scenarios.</p>
+
+            <div class="bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 mb-6 border border-slate-200 dark:border-slate-700 text-left space-y-2">
+                <div class="flex justify-between text-sm font-semibold">
+                    <span class="text-slate-600 dark:text-slate-300">Final Score:</span>
+                    <span class="text-eco-600 dark:text-eco-400 font-bold" id="modal-score">6 / 6</span>
+                </div>
+                <div class="flex justify-between text-sm font-semibold">
+                    <span class="text-slate-600 dark:text-slate-300">Accuracy Rate:</span>
+                    <span class="text-slate-800 dark:text-slate-100 font-bold" id="modal-accuracy">100%</span>
+                </div>
+            </div>
+
+            <button onclick="closeModal()" class="w-full bg-eco-600 hover:bg-eco-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-eco-600/30 transition">
+                Continue Exploring
+            </button>
+        </div>
+    </div>
+
+    <!-- Explanation Card Detail Modal -->
+    <div id="explanation-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 text-left">
+            <div id="explanation-header" class="flex items-center gap-3 mb-3"></div>
+            <div id="explanation-body" class="text-sm text-slate-600 dark:text-slate-300 space-y-3 leading-relaxed mb-6"></div>
+            <button onclick="closeExplanationModal()" class="w-full bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 dark:hover:bg-slate-600 text-white font-bold py-2.5 rounded-xl transition">
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <footer class="mt-auto bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-eco-500 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white tracking-tight">EcoMigrate</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Interactive educational portal focused on environmental causes of human migration and pollution awareness.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Classified Drivers</h4>
+                    <ul class="text-xs space-y-2 text-slate-400">
+                        <li><i class="fa-solid fa-angle-right text-eco-500 mr-1"></i> Economic Factors</li>
+                        <li><i class="fa-solid fa-angle-right text-eco-500 mr-1"></i> Political Causes</li>
+                        <li><i class="fa-solid fa-angle-right text-eco-500 mr-1"></i> Social & Family Ties</li>
+                        <li><i class="fa-solid fa-angle-right text-eco-500 mr-1"></i> Educational Pursuits</li>
+                        <li><i class="fa-solid fa-angle-right text-eco-500 mr-1"></i> Environmental Degradation</li>
+                        <li><i class="fa-solid fa-angle-right text-eco-500 mr-1"></i> Safety & Conflict</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Theme & Settings</h4>
+                    <p class="text-xs text-slate-400 mb-4">Switch mode preference at any time.</p>
+                    <button onclick="toggleTheme()" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-eco-400 font-semibold border border-slate-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-circle-half-stroke"></i> Toggle Light/Dark Theme
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+                &copy; <span id="year"></span> EcoMigrate Educational Resource. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        /* --- LIGHT / DARK MODE CONTROLLER --- */
+        function initTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-toggle-dark-icon').classList.add('hidden');
+                document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-toggle-dark-icon').classList.remove('hidden');
+                document.getElementById('theme-toggle-light-icon').classList.add('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                document.getElementById('theme-toggle-dark-icon').classList.remove('hidden');
+                document.getElementById('theme-toggle-light-icon').classList.add('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                document.getElementById('theme-toggle-dark-icon').classList.add('hidden');
+                document.getElementById('theme-toggle-light-icon').classList.remove('hidden');
+            }
+        }
+        initTheme();
+
+        /* --- MIGRANT SCENARIOS DATA --- */
+        const migrantScenarios = [
+            {
+                id: 'migrant-1',
+                name: 'Elena & Maria',
+                origin: 'River Delta Region',
+                description: 'Industrial chemical runoffs poisoned local freshwater rivers, ruining their crop yields and making local water unsafe.',
+                category: 'Environmental',
+                icon: 'fa-droplet-slash',
+                explanation: 'This scenario is driven by **Environmental** factors. Industrial water pollution directly compromised food and health safety.'
+            },
+            {
+                id: 'migrant-2',
+                name: 'Carlos',
+                origin: 'Capital City',
+                description: 'Lost his factory job due to severe national economic collapse and moved abroad to secure steady income for his family.',
+                category: 'Economic',
+                icon: 'fa-briefcase',
+                explanation: 'This is an **Economic** cause. Carlos relocated due to job loss, unemployment, and financial hardship.'
+            },
+            {
+                id: 'migrant-3',
+                name: 'Amina',
+                origin: 'Conflict Zone',
+                description: 'Fled her home village to seek safety in a neighboring region after violent armed conflict broke out nearby.',
+                category: 'Safety-related',
+                icon: 'fa-shield-halved',
+                explanation: 'This is a **Safety-related** cause. Amina fled direct physical threats, war, and violence.'
+            },
+            {
+                id: 'migrant-4',
+                name: 'Lukas',
+                origin: 'Small Rural Town',
+                description: 'Relocated to Germany after receiving a full scholarship to complete a university degree in environmental engineering.',
+                category: 'Educational',
+                icon: 'fa-graduation-cap',
+                explanation: 'This is an **Educational** cause. Lukas moved to access higher academic degrees.'
+            },
+            {
+                id: 'migrant-5',
+                name: 'Mateo',
+                origin: 'Protest District',
+                description: 'Decided to leave his home nation after government authorities stripped away civil rights and suppressed free expression.',
+                category: 'Political',
+                icon: 'fa-landmark',
+                explanation: 'This is a **Political** cause. Mateo migrated due to government policy and loss of civil liberties.'
+            },
+            {
+                id: 'migrant-6',
+                name: 'Sofia',
+                origin: 'Southern Province',
+                description: 'Traveled overseas to join her husband and parents who had moved and established residence three years prior.',
+                category: 'Social or family-related',
+                icon: 'fa-people-roof',
+                explanation: 'This is a **Social or family-related** cause. Sofia moved for family reunification.'
+            }
+        ];
+
+        let availableCards = [...migrantScenarios];
+        let assignedCards = {};
+        let score = 0;
+        let selectedCardId = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderDeckCards();
+            renderQuickCategoryButtons();
+            setupDragAndDrop();
+        });
+
+        /* Pollution Tabs Switcher */
+        function switchTab(tabName) {
+            const tabs = ['air', 'water', 'soil', 'climate'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                const panel = document.getElementById(`panel-${t}`);
+                if (t === tabName) {
+                    btn.className = 'tab-btn active px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all bg-eco-600 text-white shadow-md';
+                    panel.classList.remove('hidden');
+                } else {
+                    btn.className = 'tab-btn px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700';
+                    panel.classList.add('hidden');
+                }
+            });
+        }
+
+        /* Render Cards */
+        function renderDeckCards() {
+            const deck = document.getElementById('card-deck');
+            deck.innerHTML = '';
+
+            if (availableCards.length === 0) {
+                deck.innerHTML = `
+                    <div class="text-center py-8 px-4 border-2 border-dashed border-eco-300 dark:border-eco-800 rounded-2xl bg-eco-50/50 dark:bg-eco-950/30">
+                        <i class="fa-solid fa-circle-check text-4xl text-eco-600 dark:text-eco-400 mb-2"></i>
+                        <h4 class="font-bold text-slate-800 dark:text-slate-100">All Scenarios Classified!</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Check your results in the category boxes.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            availableCards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.id = card.id;
+                cardEl.draggable = true;
+                cardEl.className = `draggable-card bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all ${
+                    selectedCardId === card.id ? 'ring-2 ring-eco-500 border-transparent bg-eco-50 dark:bg-slate-700' : ''
+                }`;
+                
+                cardEl.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center text-sm font-bold">
+                                <i class="fa-solid ${card.icon}"></i>
+                            </span>
+                            <div>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm">${card.name}</h4>
+                                <span class="text-[11px] font-semibold text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>${card.origin}</span>
+                            </div>
+                        </div>
+                        <span class="text-xs text-eco-600 dark:text-eco-400 font-bold bg-eco-50 dark:bg-eco-950 px-2 py-0.5 rounded-md">Scenario</span>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">${card.description}</p>
+                `;
+
+                cardEl.addEventListener('click', () => selectCardForQuickAssign(card.id));
+                cardEl.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', card.id);
+                    cardEl.classList.add('dragging');
+                });
+                cardEl.addEventListener('dragend', () => cardEl.classList.remove('dragging'));
+
+                deck.appendChild(cardEl);
+            });
+
+            updateMobilePanelVisibility();
+        }
+
+        /* Drag and Drop Setup */
+        function setupDragAndDrop() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const cardId = e.dataTransfer.getData('text/plain');
+                    const targetCategory = zone.getAttribute('data-category');
+                    assignCardToCategory(cardId, targetCategory);
+                });
+            });
+        }
+
+        /* Direct Mobile Selection Buttons */
+        function renderQuickCategoryButtons() {
+            const container = document.getElementById('quick-category-buttons');
+            const categories = [
+                { name: 'Economic', icon: 'fa-sack-dollar' },
+                { name: 'Political', icon: 'fa-landmark' },
+                { name: 'Social or family-related', icon: 'fa-people-roof', label: 'Social/Family' },
+                { name: 'Educational', icon: 'fa-graduation-cap' },
+                { name: 'Environmental', icon: 'fa-tree' },
+                { name: 'Safety-related', icon: 'fa-shield-halved' },
+            ];
+
+            container.innerHTML = '';
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 hover:bg-eco-50 dark:hover:bg-slate-700 transition`;
+                btn.innerHTML = `<i class="fa-solid ${cat.icon} text-slate-500"></i> ${cat.label || cat.name}`;
+                btn.onclick = () => {
+                    if (selectedCardId) {
+                        assignCardToCategory(selectedCardId, cat.name);
+                        selectedCardId = null;
+                        renderDeckCards();
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function selectCardForQuickAssign(cardId) {
+            selectedCardId = (selectedCardId === cardId) ? null : cardId;
+            renderDeckCards();
+        }
+
+        function updateMobilePanelVisibility() {
+            const panel = document.getElementById('quick-assign-panel');
+            if (selectedCardId) {
+                panel.classList.remove('hidden');
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+
+        /* Assign Card Logic */
+        function assignCardToCategory(cardId, targetCategory) {
+            const cardIndex = availableCards.findIndex(c => c.id === cardId);
+            if (cardIndex === -1) return;
+
+            const card = availableCards[cardIndex];
+            const isCorrect = card.category === targetCategory;
+
+            availableCards.splice(cardIndex, 1);
+            assignedCards[cardId] = { ...card, userCategory: targetCategory, isCorrect };
+
+            if (isCorrect) score++;
+
+            const categoryZone = document.querySelector(`.drop-zone[data-category="${targetCategory}"] .category-slot`);
+            const item = document.createElement('div');
+            item.className = `p-3 rounded-xl text-xs border flex items-center justify-between gap-2 ${
+                isCorrect ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-red-50 dark:bg-red-950/60 border-red-200 dark:border-red-800 text-red-900 dark:text-red-200'
+            }`;
+            item.innerHTML = `
+                <div>
+                    <span class="font-bold block">${card.name}</span>
+                    <span class="text-[10px] opacity-80">${isCorrect ? 'Correct Category' : 'Incorrect Category'}</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <button onclick="showExplanation('${card.id}')" class="p-1 hover:opacity-75" title="Read explanation">
+                        <i class="fa-solid fa-circle-info text-sm"></i>
+                    </button>
+                    <i class="fa-solid ${isCorrect ? 'fa-circle-check text-emerald-600 dark:text-emerald-400' : 'fa-circle-xmark text-red-500'} text-base"></i>
+                </div>
+            `;
+            categoryZone.appendChild(item);
+
+            updateProgress();
+            renderDeckCards();
+            showExplanation(card.id);
+
+            if (availableCards.length === 0) {
+                setTimeout(showCompletionModal, 600);
+            }
+        }
+
+        function updateProgress() {
+            const total = migrantScenarios.length;
+            const remaining = availableCards.length;
+            const completed = total - remaining;
+            const percent = Math.round((completed / total) * 100);
+
+            document.getElementById('current-score').textContent = `${score} / ${total}`;
+            document.getElementById('cards-remaining').textContent = remaining;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                const cat = zone.getAttribute('data-category');
+                const count = Object.values(assignedCards).filter(c => c.userCategory === cat).length;
+                zone.querySelector('.count-badge').textContent = count;
+            });
+        }
+
+        function showExplanation(cardId) {
+            const card = assignedCards[cardId] || migrantScenarios.find(c => c.id === cardId);
+            if (!card) return;
+
+            const modal = document.getElementById('explanation-modal');
+            const header = document.getElementById('explanation-header');
+            const body = document.getElementById('explanation-body');
+            const isAssigned = assignedCards[cardId];
+            const isCorrect = isAssigned ? isAssigned.isCorrect : false;
+
+            header.innerHTML = `
+                <div class="w-10 h-10 rounded-xl ${isAssigned ? (isCorrect ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400' : 'bg-red-100 dark:bg-red-950 text-red-600') : 'bg-eco-100 text-eco-600'} flex items-center justify-center text-lg font-bold">
+                    <i class="fa-solid ${card.icon}"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100">${card.name}</h4>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Correct Category: <strong class="text-eco-600 dark:text-eco-400">${card.category}</strong></span>
+                </div>
+            `;
+
+            body.innerHTML = `
+                <p>${card.explanation}</p>
+                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs italic">
+                    "${card.description}"
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeExplanationModal() {
+            document.getElementById('explanation-modal').classList.add('hidden');
+        }
+
+        function toggleHint() {
+            document.getElementById('hint-box').classList.toggle('hidden');
+        }
+
+        function showCompletionModal() {
+            const modal = document.getElementById('result-modal');
+            const total = migrantScenarios.length;
+            const accuracy = Math.round((score / total) * 100);
+
+            document.getElementById('modal-score').textContent = `${score} / ${total}`;
+            document.getElementById('modal-accuracy').textContent = `${accuracy}%`;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('result-modal').classList.add('hidden');
+        }
+
+        function resetActivity() {
+            availableCards = [...migrantScenarios];
+            assignedCards = {};
+            score = 0;
+            selectedCardId = null;
+
+            document.querySelectorAll('.category-slot').forEach(slot => slot.innerHTML = '');
+            updateProgress();
+            renderDeckCards();
+        }
+
+        /* --- 5-QUESTION REFLECTION QUIZ ENGINE --- */
+        let quizAnswers = {};
+        const quizCorrectAnswers = { 1: 'b', 2: 'b', 3: 'c', 4: 'a', 5: 'b' };
+
+        function checkQuizAnswer(qNum, choice, btn) {
+            if (quizAnswers[qNum]) return; // Answered already
+
+            quizAnswers[qNum] = choice;
+            const container = document.getElementById(`q${qNum}-options`);
+            const feedback = document.getElementById(`q${qNum}-feedback`);
+            const buttons = container.querySelectorAll('.q-btn');
+
+            buttons.forEach(b => b.classList.add('pointer-events-none', 'opacity-60'));
+
+            const isCorrect = choice === quizCorrectAnswers[qNum];
+            if (isCorrect) {
+                btn.classList.remove('opacity-60');
+                btn.classList.add('bg-emerald-100', 'dark:bg-emerald-950', 'border-emerald-400', 'text-emerald-900', 'dark:text-emerald-200', 'font-bold');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> Correct answer!';
+                feedback.className = 'text-xs font-bold p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 block';
+            } else {
+                btn.classList.remove('opacity-60');
+                btn.classList.add('bg-red-100', 'dark:bg-red-950', 'border-red-400', 'text-red-900', 'dark:text-red-200');
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> Incorrect. Option ${quizCorrectAnswers[qNum].toUpperCase()} is correct.`;
+                feedback.className = 'text-xs font-bold p-3 rounded-xl bg-red-50 dark:bg-red-950/70 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800 block';
+            }
+
+            // Check if all 5 answered
+            if (Object.keys(quizAnswers).length === 5) {
+                let quizScore = 0;
+                for (let i = 1; i <= 5; i++) {
+                    if (quizAnswers[i] === quizCorrectAnswers[i]) quizScore++;
+                }
+                const banner = document.getElementById('quiz-score-banner');
+                document.getElementById('quiz-final-score-text').textContent = `Quiz Completed! Score: ${quizScore} / 5`;
+                banner.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
